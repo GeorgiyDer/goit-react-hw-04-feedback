@@ -11,18 +11,24 @@ export const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
+  const leaveFeedback = (option) => {
+    switch (option) {
+      case 'good':
+        setGood(prevState => prevState + 1);
+        break;
 
-  const makeGoodResult = () => {
-    setGood(good +1)
-  };
+      case 'neutral':
+        setNeutral(prevState => prevState + 1);
+        break;
 
-  const  makeNeutralResult = () => {
-    setNeutral(neutral +1)
-  };
+      case 'bad':
+        setBad(prevState => prevState + 1);
+        break;
 
-  const makeBadResult = () => {
-    setBad(bad +1)
-  };
+      default:
+        return;
+    }
+  }
 
   const  countTotalFeedback = () => {
     const feedbackValues = good + bad + neutral;
@@ -36,8 +42,10 @@ export const App = () => {
     return percentPositiveFeadback;
   };
 
+  const options = ['good', 'neutral', 'bad'];
+
   return <SectionTitle title="Please leave feedback">
-        <FeedbackOptions good={makeGoodResult} neutral={makeNeutralResult} bad={makeBadResult} />
+        <FeedbackOptions options={options} onLeaveFeedback={leaveFeedback} />
         {countTotalFeedback() ?
           <Statistics
             title="Statistics"
